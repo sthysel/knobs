@@ -1,8 +1,7 @@
 Knobs are used to tune environment variables
 ============================================
 
-.. image:: /pics/knob.jpg
-   :allign: center
+.. image:: pics/knob.jpg
 
 Use *knobs* if you worship at the church of the `12 Factor App <http://www.12factor.net/>`_
 
