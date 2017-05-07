@@ -25,8 +25,8 @@ sdist: clean
 
 test:
 	pip install -e .
-	flake8 .
 	tox
+	flake8 .
 
 coverage:
 	coverage run --source=dotenv.py --omit='*tests*' -m py.test tests/ -v --tb=native
