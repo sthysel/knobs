@@ -44,7 +44,9 @@ class Knob(object):
         :param validator: Callable to validate value
         """
 
-        assert isinstance(default, cast)
+        # force the cast to the type of the default
+        if not isinstance(default, cast):
+            cast = type(default)
 
         self.env_name = env_name
         self.default = default
