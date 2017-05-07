@@ -35,12 +35,13 @@ class Knob(object):
 
     _register = {}
 
-    def __init__(self, env_name, default, cast=str, description=''):
+    def __init__(self, env_name, default, cast=str, description='', validator=None):
         """
         :param env_name: Name of environment variable
         :param default: Default knob setting
         :param cast: Cast value to python type
         :param description: What does this knob do
+        :param validator: Callable to validate value
         """
 
         assert isinstance(default, cast)
@@ -49,6 +50,7 @@ class Knob(object):
         self.default = default
         self.cast = cast
         self.description = description
+        self.validator = validator
 
         self._register[env_name] = self
 
@@ -65,24 +67,28 @@ class Knob(object):
         return self.get()
 
     def get(self):
-        val = os.getenv(self.env_name, self.default)
+        source_value = os.getenv(self.env_name, self.default)
 
-        if self.cast == bool and isinstance(val, str):
-            val = val.lower() in BOOLEAN_TRUE_STRINGS
+        if self.cast == bool and isinstance(source_value, str):
+            val = source_value.lower() in BOOLEAN_TRUE_STRINGS
 
         try:
-            return self.cast(val)
+            val = self.cast(source_value)
         except ValueError as e:
             click.secho(e.message, err=True, color='red')
             sys.exit(1)
 
+        if self.validator:
+            val = self.validator(val)
+
+        return val
+
     @classmethod
     def get_knob_defaults(cls):
-        """ Returns a string with defaults 
+        r""" Returns a string with defaults 
         
         >>> Knob.get_knob_defaults()
         '#HAVE_RUM=True\n#JOLLY_ROGER_PIRATES=124\n#WUNDER=BAR'
-        
         """
 
         return '\n'.join(
