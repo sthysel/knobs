@@ -16,7 +16,8 @@ clean-pyc:
 	find . -name '*~' -exec rm -f {} +
 
 release: clean
-	twine upload ./dist/
+	python setup.py bdist_wheel
+	twine upload ./dist/*
 
 sdist: clean
 	python setup.py sdist

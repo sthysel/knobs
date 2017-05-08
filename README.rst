@@ -2,7 +2,9 @@
 Knobs are used to tune environment variables
 ============================================
 
-.. image:: ./pics/knob.jpg
+http://knobs.readthedocs.io/en/latest/?badge=latest
+
+.. image:: /pics/knob.jpg
 
 Use *knobs* if you worship at the church of the `12 Factor App <http://www.12factor.net/>`_
 
