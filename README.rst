@@ -10,7 +10,7 @@ Knobs are used to tune environment variables
 
 .. image:: /pics/knob.jpg
 
-Use ``lknobs`` if you worship at the church of the `12 Factor App <http://www.12factor.net/>`_
+Use ``knobs`` if you worship at the church of the `12 Factor App <http://www.12factor.net/>`_
 
 A knob is a wrapper for an environment variable. It can:
 
