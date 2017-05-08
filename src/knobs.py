@@ -25,6 +25,8 @@ class Knob(object):
     Knob('JOLLY_ROGER_PIRATES', 124, description='Yar')
     >>> pirate_count.get()
     124
+    >>> pirate_count.get_type()
+    <type 'int'>
     >>> rum_flag = Knob('HAVE_RUM', True)
     >>> rum_flag
     Knob('HAVE_RUM', True, description='')
