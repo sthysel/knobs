@@ -4,7 +4,6 @@ Knobs are used to tune environment variables
 
 
 .. image:: https://readthedocs.org/projects/knobs/badge/?version=latest
-
    :target: http://knobs.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
 
