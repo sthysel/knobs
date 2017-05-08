@@ -36,5 +36,5 @@ coverage-html: coverage
 	coverage html
 
 patch:
-    bumpversion patch
+	bumpversion patch
 
