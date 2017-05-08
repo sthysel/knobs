@@ -3,3 +3,4 @@ pytest==3.0.7
 bumpversion
 flake8
 coverage
+twine

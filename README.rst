@@ -1,7 +1,14 @@
+============================================
 Knobs are used to tune environment variables
 ============================================
 
 .. image:: pics/knob.jpg
+
+.. code::
+   >>> pirates = Knob('JOLLY_ROGER_PIRATES', 124, description='Yar')
+   >>> pirates.get()
+   124
+
 
 Use *knobs* if you worship at the church of the `12 Factor App <http://www.12factor.net/>`_
 
@@ -18,10 +25,19 @@ Knobs uses a forked copy of [python-sotenv](https://github.com/theskumar/python-
 
 
 Install
-*******
+=======
 
+Install from pypi
 
-Install from source ``pip install .``
+.. code::
+
+   $ pip install knobs
+
+Install from source
+
+.. code::
+
+   $ pip install .
 
 
 

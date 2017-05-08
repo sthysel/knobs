@@ -22,12 +22,12 @@ class Knob(object):
     'BAR'
     >>> pirate_count = Knob('JOLLY_ROGER_PIRATES', 124, description='Yar')
     >>> pirate_count
-    Knob('JOLLY_ROGER_PIRATES', '124', description='Yar')
+    Knob('JOLLY_ROGER_PIRATES', 124, description='Yar')
     >>> pirate_count.get()
     124
     >>> rum_flag = Knob('HAVE_RUM', True)
     >>> rum_flag
-    Knob('HAVE_RUM', 'True', description='')
+    Knob('HAVE_RUM', True, description='')
     >>> rum_flag.get()
     True
     """
@@ -54,10 +54,10 @@ class Knob(object):
         self._register[env_name] = self
 
     def __repr__(self):
-        return "{_class}('{env_name}', '{default}', description='{desc}')".format(
+        return "{_class}('{env_name}', {default}, description='{desc}')".format(
             _class=self.__class__.__name__,
             env_name=self.env_name,
-            default=self.default,
+            default=repr(self.default),
             desc=self.description
         )
 
@@ -73,7 +73,10 @@ class Knob(object):
 
         # bool
         if self._cast == bool:
-            return source_value.lower() in BOOLEAN_TRUE_STRINGS
+            if isinstance(source_value, str):
+                return source_value.lower() in BOOLEAN_TRUE_STRINGS
+            if isinstance(source_value, bool):
+                return source_value
 
         try:
             val = self._cast(source_value)
