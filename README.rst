@@ -2,7 +2,7 @@
 Knobs are used to tune environment variables
 ============================================
 
-.. image:: pics/knob.jpg
+.. image:: ./pics/knob.jpg
 
 Use *knobs* if you worship at the church of the `12 Factor App <http://www.12factor.net/>`_
 
@@ -12,6 +12,7 @@ A knob is a wrapper for an environment variable. It can
 * Validate a value is good.
 
 .. code::
+
    >>> pirates = Knob('JOLLY_ROGER_PIRATES', 124, description='Yar')
    >>> pirates.get()
    124

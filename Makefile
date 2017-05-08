@@ -16,11 +16,14 @@ clean-pyc:
 	find . -name '*~' -exec rm -f {} +
 
 release: clean
-	python setup.py sdist upload
-	python setup.py bdist_wheel upload
+	twine upload ./dist/
 
 sdist: clean
 	python setup.py sdist
+	ls -l dist
+
+wheel: clean
+	python setup.py bdist_wheel
 	ls -l dist
 
 test:
