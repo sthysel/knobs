@@ -12,7 +12,7 @@ Knobs are used to tune environment variables
    :alt: Documentation Status
 
 
-.. image:: knob.jpg
+.. image:: https://github.com/sthysel/knobs/blob/master/docs/knob.jpg?raw=true
 
 
 .. code:: python
