@@ -4,7 +4,7 @@ Knobs are used to tune environment variables
 
 
 .. image:: https://badge.fury.io/py/knobs.svg
-    :target: https://badge.fury.io/py/knobs
+   :target: https://badge.fury.io/py/knobs
 
 
 .. image:: https://readthedocs.org/projects/knobs/badge/?version=latest
