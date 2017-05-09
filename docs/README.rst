@@ -13,7 +13,7 @@ Knobs are used to tune environment variables
    :target: http://knobs.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
 
-.. doctest::
+.. code:: python
 
    >>> pirates = Knob('JOLLY_ROGER_PIRATES', 124, description='Yar')
    >>> pirates.get()

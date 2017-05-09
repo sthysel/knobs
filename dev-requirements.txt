@@ -4,3 +4,7 @@ bumpversion
 flake8
 coverage
 twine
+
+# docs
+restructuredtext_lint
+pygments
