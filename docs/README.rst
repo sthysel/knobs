@@ -2,7 +2,7 @@
 Knobs are used to tune environment variables
 ============================================
 
-.. image:: knob.jpg
+.. image:: /docs/knob.jpg
 
 
 .. image:: https://badge.fury.io/py/knobs.svg
