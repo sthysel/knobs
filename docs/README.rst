@@ -11,6 +11,8 @@ Knobs are used to tune environment variables
    :target: http://knobs.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
 
+|
+|
 
 .. image:: https://github.com/sthysel/knobs/blob/master/docs/knob.jpg?raw=true
 
