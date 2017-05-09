@@ -2,8 +2,6 @@
 Knobs are used to tune environment variables
 ============================================
 
-.. image:: knob.jpg
-
 
 .. image:: https://badge.fury.io/py/knobs.svg
     :target: https://badge.fury.io/py/knobs
@@ -12,6 +10,10 @@ Knobs are used to tune environment variables
 .. image:: https://readthedocs.org/projects/knobs/badge/?version=latest
    :target: http://knobs.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
+
+
+.. image:: knob.jpg
+
 
 .. code:: python
 
