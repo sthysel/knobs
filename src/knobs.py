@@ -36,10 +36,11 @@ class Knob(object):
 
     _register = {}
 
-    def __init__(self, env_name, default, description='', validator=None):
+    def __init__(self, env_name, default, unit='', description='', validator=None):
         """
         :param env_name: Name of environment variable
         :param default: Default knob setting
+        :param unit: Unit description
         :param description: What does this knob do
         :param validator: Callable to validate value
         """
@@ -50,16 +51,18 @@ class Knob(object):
 
         self.env_name = env_name
         self.default = default
+        self.unit = unit
         self.description = description
         self.validator = validator
 
         self._register[env_name] = self
 
     def __repr__(self):
-        return "{_class}('{env_name}', {default}, description='{desc}')".format(
+        return "{_class}('{env_name}', {default}, {unit}, description='{desc}')".format(
             _class=self.__class__.__name__,
             env_name=self.env_name,
             default=repr(self.default),
+            unit=self.unit,
             desc=self.description
         )
 
@@ -69,6 +72,12 @@ class Knob(object):
     def get_type(self):
         """ The type of this knob """
         return self._cast
+
+    def help(self):
+        """
+        :return: Description string with default appended
+        """
+        return '{}, Default: {}{}'.format(self.description, self.default, self.unit)
 
     def get(self):
         source_value = os.getenv(self.env_name, self.default)
