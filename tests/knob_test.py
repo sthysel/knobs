@@ -3,7 +3,12 @@ from knobs import Knob
 
 def test_repr():
     pirate_count = Knob('JOLLY_ROGER_PIRATES', 124, description='Yar')
-    assert repr(pirate_count) == "Knob('JOLLY_ROGER_PIRATES', 124, description='Yar')"
+    assert repr(pirate_count) == "Knob('JOLLY_ROGER_PIRATES', 124, unit='', description='Yar', validator=None)"
+
+
+def test_serialize():
+    knob = Knob('WUNDER', 'BAR', description='Foo Bar')
+    assert repr(knob) == "Knob('WUNDER', 'BAR', unit='', description='Foo Bar', validator=None)"
 
 
 def test_knob():
