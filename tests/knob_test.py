@@ -1,4 +1,5 @@
 from knobs import Knob
+import os
 
 
 def test_repr():
@@ -21,6 +22,27 @@ def test_knob():
 def test_knob_cast_str_auto_corrected_to_int():
     knob = Knob('WUNDER', 22)
     assert knob.get() == 22
+
+
+def test_tuple():
+    knob = Knob('LIST', ('LOVE', 'THEY', 'NEIGHBOUR'))
+    assert knob() == ('LOVE', 'THEY', 'NEIGHBOUR')
+
+
+def test_list_from_env():
+    os.environ['LIST'] = 'DEAD BEEF COFFEE'
+    assert type(os.environ['LIST']) == str
+    knob = Knob('LIST', ['LOVE', 'THEY', 'NEIGHBOUR'])
+    assert knob.get_type() == list
+    assert knob() == ['DEAD', 'BEEF', 'COFFEE']
+
+
+def test_typle_from_env():
+    os.environ['TUPLE'] = 'DEAD BEEF COFFEE'
+    assert type(os.environ['TUPLE']) == str
+    knob = Knob('LIST', ('LOVE', 'THEY', 'NEIGHBOUR'))
+    assert knob.get_type() == tuple
+    assert knob() == ('DEAD', 'BEEF', 'COFFEE')
 
 
 def test_cast_to_int():

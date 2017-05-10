@@ -81,7 +81,9 @@ class Knob(object):
         return '{}, Default: {}{}'.format(self.description, self.default, self.unit)
 
     def get(self):
-        source_value = os.getenv(self.env_name, self.default)
+        source_value = os.getenv(self.env_name)
+        if source_value is None:
+            return self.default
 
         # bool
         if self._cast == bool:
@@ -89,6 +91,14 @@ class Knob(object):
                 return source_value.lower() in BOOLEAN_TRUE_STRINGS
             if isinstance(source_value, bool):
                 return source_value
+
+        # list
+        if self._cast == list:
+            return source_value.split()
+
+        # tuple
+        if self._cast == tuple:
+            return tuple(source_value.split())
 
         try:
             val = self._cast(source_value)
