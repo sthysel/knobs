@@ -17,19 +17,19 @@ class Knob(object):
     the required type.
     >>> knob = Knob('WUNDER', 'BAR', description='Foo Bar')
     >>> knob
-    Knob('WUNDER', 'BAR', description='Foo Bar')
+    Knob('WUNDER', 'BAR', unit='', description='Foo Bar', validator=None)
     >>> knob.get()
     'BAR'
     >>> pirate_count = Knob('JOLLY_ROGER_PIRATES', 124, description='Yar')
     >>> pirate_count
-    Knob('JOLLY_ROGER_PIRATES', 124, description='Yar')
+    Knob('JOLLY_ROGER_PIRATES', 124, unit='', description='Yar', validator=None)
     >>> pirate_count.get()
     124
     >>> pirate_count.get_type()
     <type 'int'>
     >>> rum_flag = Knob('HAVE_RUM', True)
     >>> rum_flag
-    Knob('HAVE_RUM', True, description='')
+    Knob('HAVE_RUM', True, unit='', description='', validator=None)
     >>> rum_flag.get()
     True
     """
@@ -102,6 +102,10 @@ class Knob(object):
         return val
 
     @classmethod
+    def get_registered_knob(cls, name):
+        return cls._register.get(name, None)
+
+    @classmethod
     def clear_registry(cls):
         """ Clear knob registry """
         cls._register = {}
@@ -110,10 +114,13 @@ class Knob(object):
     def get_knob_defaults(cls):
         r""" Returns a string with defaults
         >>> Knob.get_knob_defaults()
-        '#HAVE_RUM=True\n#JOLLY_ROGER_PIRATES=124\n#WUNDER=BAR'
+        '# , Default: True \n#HAVE_RUM=True\n# Yar, Default: 124 \n#JOLLY_ROGER_PIRATES=124\n# Foo Bar, Default: BAR \n#WUNDER=BAR'
         """
 
         return '\n'.join(
-            ['#{knob}={default}'.format(knob=knob, default=cls._register[knob].default)
-             for knob in sorted(cls._register.keys())]
+            ['# {help} \n#{knob}={default}'.format(
+                help=cls.get_registered_knob(name).help(),
+                knob=name,
+                default=cls.get_registered_knob(name).default)
+             for name in sorted(cls._register.keys())]
         )
