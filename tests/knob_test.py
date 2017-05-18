@@ -64,7 +64,8 @@ def test_registry():
     k2 = Knob('K2', 'Second knob', description='Padre')
     k1 = Knob('K3', 'Third knob', description='Magnifici')
 
+    print(Knob.get_knob_defaults())
     print(repr(Knob.get_knob_defaults()))
 
-    envout = '# Omi, Default: First knob \n#K1=First knob\n# Padre, Default: Second knob \n#K2=Second knob\n# Magnifici, Default: Third knob \n#K3=Third knob'
+    envout = '# Omi\n# K1=First knob\n\n# Padre\n# K2=Second knob\n\n# Magnifici\n# K3=Third knob\n'
     assert Knob.get_knob_defaults() == envout

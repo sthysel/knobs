@@ -124,12 +124,12 @@ class Knob(object):
     def get_knob_defaults(cls):
         r""" Returns a string with defaults
         >>> Knob.get_knob_defaults()
-        '# , Default: True \n#HAVE_RUM=True\n# Yar, Default: 124 \n#JOLLY_ROGER_PIRATES=124\n# Foo Bar, Default: BAR \n#WUNDER=BAR'
+        '# \n# HAVE_RUM=True\n\n# Yar\n# JOLLY_ROGER_PIRATES=124\n\n# Foo Bar\n# WUNDER=BAR\n'
         """
 
         return '\n'.join(
-            ['# {help} \n#{knob}={default}'.format(
-                help=cls.get_registered_knob(name).help(),
+            ['# {description}\n# {knob}={default}\n'.format(
+                description=cls.get_registered_knob(name).description,
                 knob=name,
                 default=cls.get_registered_knob(name).default)
              for name in sorted(cls._register.keys())]
