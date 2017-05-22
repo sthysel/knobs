@@ -16,7 +16,7 @@ def read(*names, **kwargs):
 setup(
     name='knobs',
     license='GPLv2',
-    version='0.2.11',
+    version='0.2.12',
     description='Environment variable manager',
     long_description=read('README.rst'),
     install_requires=[
