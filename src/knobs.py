@@ -80,9 +80,25 @@ class Knob(object):
         """
         return '{}, Default: {}{}'.format(self.description, self.default, self.unit)
 
+    def rm(self):
+        """
+        Remove environment variable 
+        :return: 
+        """
+        del os.environ[self.env_name]
+
+    def set(self, value):
+        """ 
+        set the environment variable
+        This is useful when the default gets mutated by the cli
+        """
+        os.environ[self.env_name] = str(value)
+
     def get(self):
         source_value = os.getenv(self.env_name)
         if source_value is None:
+            # set the environment if it is not set
+            os.environ[self.env_name] = str(self.default)
             return self.default
 
         # bool
@@ -132,5 +148,5 @@ class Knob(object):
                 description=cls.get_registered_knob(name).description,
                 knob=name,
                 default=cls.get_registered_knob(name).default)
-             for name in sorted(cls._register.keys())]
+                for name in sorted(cls._register.keys())]
         )

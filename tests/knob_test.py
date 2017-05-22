@@ -17,6 +17,7 @@ def test_knob():
     assert knob() == 'BAR'
     assert knob.get() == 'BAR'
     assert knob.description == 'Foo Bar'
+    knob.rm()
 
 
 def test_knob_cast_str_auto_corrected_to_int():
@@ -69,3 +70,12 @@ def test_registry():
 
     envout = '# Omi\n# K1=First knob\n\n# Padre\n# K2=Second knob\n\n# Magnifici\n# K3=Third knob\n'
     assert Knob.get_knob_defaults() == envout
+
+
+def test_set():
+    setknob = Knob('KNOB_NAME', 'KNOB_VAL')
+    assert setknob.get_type() == str
+    assert setknob.get() == 'KNOB_VAL'
+
+    setknob.set('XX123')
+    assert setknob.get() == 'XX123'
