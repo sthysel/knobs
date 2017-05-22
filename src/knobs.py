@@ -78,7 +78,7 @@ class Knob(object):
         """
         :return: Description string with default appended
         """
-        return '{}, Default: {}{}'.format(self.description, self.default, self.unit)
+        return '{}, Default: {}{}'.format(self.description, self.get(), self.unit)
 
     def rm(self):
         """
@@ -96,8 +96,8 @@ class Knob(object):
 
     def get(self):
         source_value = os.getenv(self.env_name)
+        # set the environment if it is not set
         if source_value is None:
-            # set the environment if it is not set
             os.environ[self.env_name] = str(self.default)
             return self.default
 
