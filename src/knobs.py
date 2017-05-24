@@ -57,16 +57,6 @@ class Knob(object):
 
         self._register[env_name] = self
 
-    def __repr__(self):
-        return "{_class}('{env_name}', {default}, unit={unit}, description='{desc}', validator={validator})".format(
-            _class=self.__class__.__name__,
-            env_name=self.env_name,
-            default=repr(self.default),
-            unit=repr(self.unit),
-            desc=self.description,
-            validator=repr(self.validator),
-        )
-
     def __call__(self):
         return self.get()
 
@@ -126,6 +116,16 @@ class Knob(object):
             val = self.validator(val)
 
         return val
+
+    def __repr__(self):
+        return "{_class}('{env_name}', {default}, unit={unit}, description='{desc}', validator={validator})".format(
+            _class=self.__class__.__name__,
+            env_name=self.env_name,
+            default=repr(self.default),
+            unit=repr(self.unit),
+            desc=self.description,
+            validator=repr(self.validator),
+        )
 
     @classmethod
     def get_registered_knob(cls, name):
