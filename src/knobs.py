@@ -2,10 +2,13 @@ from __future__ import absolute_import
 
 import os
 import sys
+import warnings
 
 import click
-from dotenv import load_dotenv, find_dotenv
+from dotenv import find_dotenv, load_dotenv
 
+# dotenv's .env file missing warning is not helpful
+warnings.filterwarnings('ignore')
 load_dotenv(find_dotenv(usecwd=True))
 
 BOOLEAN_TRUE_STRINGS = ('true', 'on', 'ok', 'y', 'yes', '1')
@@ -72,13 +75,13 @@ class Knob(object):
 
     def rm(self):
         """
-        Remove environment variable 
-        :return: 
+        Remove environment variable
+        :return:
         """
         del os.environ[self.env_name]
 
     def set(self, value):
-        """ 
+        """
         set the environment variable
         This is useful when the default gets mutated by the cli
         """

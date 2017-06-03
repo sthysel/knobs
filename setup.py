@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 import io
 from glob import glob
-
 from os.path import basename, dirname, join, splitext
+
 from setuptools import find_packages, setup
 
 

@@ -1,5 +1,6 @@
-from knobs import Knob
 import os
+
+from knobs import Knob
 
 
 def test_repr():
