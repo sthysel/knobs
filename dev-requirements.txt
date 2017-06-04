@@ -1,8 +1,10 @@
+-r requirements.txt
 tox==2.7.0
 pytest==3.0.7
 bumpversion
 flake8
 coverage
+backports.tempfile
 twine
 
 # docs

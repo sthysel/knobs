@@ -13,7 +13,7 @@ import warnings
 from collections import OrderedDict
 
 __escape_decoder = codecs.getdecoder('unicode_escape')
-__posix_variable = re.compile('\$\{[^\}]*\}')
+__posix_variable = re.compile(r'\$\{[^\}]*\}')
 
 
 def decode_escaped(escaped):
@@ -165,7 +165,7 @@ def parse_dotenv(dotenv_path):
 def resolve_nested_variables(values):
     def _replacement(name):
         """
-        get appropiate value for a variable name.
+        get appropriate value for a variable name.
         first search in environ, if not found,
         then look into the dotenv variables
         """
@@ -174,7 +174,7 @@ def resolve_nested_variables(values):
 
     def _re_sub_callback(match_object):
         """
-        From a match object gets the variable name and returns
+        From a match object get the variable name and return
         the correct replacement
         """
         return _replacement(match_object.group()[2:-1])
@@ -203,7 +203,7 @@ def _get_format(value, quote_mode='always'):
     }
 
     if quote_mode not in formats.keys():
-        return KeyError('quote_mode {} is invalid'.fomat(quote_mode))
+        return KeyError('quote_mode {} is invalid'.format(quote_mode))
 
     _mode = quote_mode
     if quote_mode == 'auto' and ' ' in value:
