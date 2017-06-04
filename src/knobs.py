@@ -21,9 +21,9 @@ class Knob(object):
     Knob('WUNDER', 'BAR', unit='', description='Foo Bar', validator=None)
     >>> knob.get()
     'BAR'
-    >>> pirate_count = Knob('JOLLY_ROGER_PIRATES', 124, description='Yar')
+    >>> pirate_count = Knob('PIRATE_COUNT', 124, description='Yar')
     >>> pirate_count
-    Knob('JOLLY_ROGER_PIRATES', 124, unit='', description='Yar', validator=None)
+    Knob('PIRATE_COUNT', 124, unit='', description='Yar', validator=None)
     >>> pirate_count.get()
     124
     >>> pirate_count.get_type()
