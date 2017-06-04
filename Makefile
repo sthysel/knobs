@@ -62,11 +62,6 @@ patch:
 git-clean:
 	git clean -f -d
 
-
-wheel: clean
-	python setup.py bdist_wheel
-	ls -l dist
-
 release: clean
 	python setup.py bdist_wheel
 	twine upload ./dist/*
