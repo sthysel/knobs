@@ -2,13 +2,11 @@ from __future__ import absolute_import
 
 import os
 import sys
-import warnings
 
 import click
-from dotenv import find_dotenv, load_dotenv
 
-# dotenv's .env file missing warning is not helpful
-warnings.filterwarnings('ignore')
+from environment import find_dotenv, load_dotenv
+
 load_dotenv(find_dotenv(usecwd=True))
 
 BOOLEAN_TRUE_STRINGS = ('true', 'on', 'ok', 'y', 'yes', '1')
