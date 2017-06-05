@@ -10,3 +10,4 @@ twine
 # docs
 restructuredtext_lint
 pygments
+autopep8
