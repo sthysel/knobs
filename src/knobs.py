@@ -4,6 +4,7 @@ import os
 import sys
 
 import click
+import tabulate
 
 from environment import find_dotenv, load_dotenv
 
@@ -136,6 +137,23 @@ class Knob(object):
     def clear_registry(cls):
         """ Clear knob registry """
         cls._register = {}
+
+    @classmethod
+    def get_knob_defaults_as_table(cls):
+        """
+        Renders knobs in table
+        :return:
+        """
+
+        knob_list = [
+            {
+                'Knob': name,
+                'Description': cls.get_registered_knob(name).description,
+                'Default': cls.get_registered_knob(name).default
+            }
+            for name in sorted(cls._register.keys())
+        ]
+        return tabulate.tabulate(knob_list, headers='keys', tablefmt='fancy_grid')
 
     @classmethod
     def get_knob_defaults(cls):
