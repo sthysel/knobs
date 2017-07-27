@@ -139,6 +139,14 @@ class Knob(object):
         cls._register = {}
 
     @classmethod
+    def print_knobs_table(cls, ctx, param, value):
+        if not value or ctx.resilient_parsing:
+            return
+        click.echo(cls.get_knob_defaults_as_table())
+        ctx.exit()
+
+
+    @classmethod
     def get_knob_defaults_as_table(cls):
         """
         Renders knobs in table
@@ -154,6 +162,13 @@ class Knob(object):
             for name in sorted(cls._register.keys())
         ]
         return tabulate.tabulate(knob_list, headers='keys', tablefmt='fancy_grid')
+
+    @classmethod
+    def print_knobs_env(cls, ctx, param, value):
+        if not value or ctx.resilient_parsing:
+            return
+        click.echo(cls.get_knob_defaults())
+        ctx.exit()
 
     @classmethod
     def get_knob_defaults(cls):

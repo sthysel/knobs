@@ -62,4 +62,4 @@ Install from source
 Versioning
 ==========
 
-Current version is 0.2.14
+Current version is 0.2.15
