@@ -1,7 +1,6 @@
 ============================================
-Knobs are used to tune environment variables
+Knobs (Version 0.2.16 ) are used to tune environment variables
 ============================================
-
 
 .. image:: https://badge.fury.io/py/knobs.svg
    :target: https://badge.fury.io/py/knobs
@@ -58,8 +57,3 @@ Install from source
    $ pip install .
 
 
-
-Versioning
-==========
-
-Current version is 0.2.15
