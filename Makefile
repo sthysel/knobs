@@ -25,10 +25,6 @@ isort:
 lint:
 	flake8 --exclude=.tox
 
-dev: dev-requirements.txt
-	$(info # Removing pycies artefacts)
-	pip install -r dev-requirements.txt
-
 
 sdist: clean
 	$(info # Build the sdist)
@@ -58,6 +54,7 @@ coverage-html: coverage
 
 patch:
 	bumpversion patch
+	-git commit -am "patch versions"
 
 git-clean:
 	git clean -f -d
