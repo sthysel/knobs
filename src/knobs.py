@@ -1,7 +1,6 @@
-from __future__ import absolute_import
-
 import os
 import sys
+import json
 
 import click
 import tabulate
@@ -13,7 +12,7 @@ load_dotenv(find_dotenv(usecwd=True))
 BOOLEAN_TRUE_STRINGS = ('true', 'on', 'ok', 'y', 'yes', '1')
 
 
-class Knob(object):
+class Knob:
     """
     A knob can be tuned to satisfaction. Lookup and _cast environment variables to
     the required type.
@@ -38,7 +37,14 @@ class Knob(object):
 
     _register = {}
 
-    def __init__(self, env_name, default, unit='', description='', validator=None):
+    def __init__(
+        self,
+        env_name: str,
+        default,
+        unit: str = '',
+        description: str = '',
+        validator=None,
+    ):
         """
         :param env_name: Name of environment variable
         :param default: Default knob setting
@@ -70,7 +76,7 @@ class Knob(object):
         """
         :return: Description string with default appended
         """
-        return '{}, Default: {}{}'.format(self.description, self.get(), self.unit)
+        return f'{self.description}, Default: {self.get()}{self.unit}'
 
     def rm(self):
         """
@@ -120,14 +126,13 @@ class Knob(object):
         return val
 
     def __repr__(self):
-        return "{_class}('{env_name}', {default}, unit={unit}, description='{desc}', validator={validator})".format(
-            _class=self.__class__.__name__,
-            env_name=self.env_name,
-            default=repr(self.default),
-            unit=repr(self.unit),
-            desc=self.description,
-            validator=repr(self.validator),
-        )
+        _class = self.__class__.__name__
+        env_name = self.env_name
+        default = repr(self.default)
+        unit = repr(self.unit)
+        desc = self.description
+        validator = repr(self.validator)
+        return f"{_class}('{env_name}', {default}, unit={unit}, description='{desc}', validator={validator})"
 
     @classmethod
     def get_registered_knob(cls, name):
@@ -145,7 +150,6 @@ class Knob(object):
         click.echo(cls.get_knob_defaults_as_table())
         ctx.exit()
 
-
     @classmethod
     def get_knob_defaults_as_table(cls):
         """
@@ -158,8 +162,7 @@ class Knob(object):
                 'Knob': name,
                 'Description': cls.get_registered_knob(name).description,
                 'Default': cls.get_registered_knob(name).default
-            }
-            for name in sorted(cls._register.keys())
+            } for name in sorted(cls._register.keys())
         ]
         return tabulate.tabulate(knob_list, headers='keys', tablefmt='fancy_grid')
 
@@ -172,15 +175,67 @@ class Knob(object):
 
     @classmethod
     def get_knob_defaults(cls):
-        r""" Returns a string with defaults
+        """ Returns a string with defaults
         >>> Knob.get_knob_defaults()
         '# \n# HAVE_RUM=True\n\n# Yar\n# JOLLY_ROGER_PIRATES=124\n\n# Foo Bar\n# WUNDER=BAR\n'
         """
 
         return '\n'.join(
-            ['# {description}\n# {knob}={default}\n'.format(
-                description=cls.get_registered_knob(name).description,
-                knob=name,
-                default=cls.get_registered_knob(name).default)
-                for name in sorted(cls._register.keys())]
+            [
+                '# {description}\n# {knob}={default}\n'.format(
+                    description=cls.get_registered_knob(name).description,
+                    knob=name,
+                    default=cls.get_registered_knob(name).default
+                ) for name in sorted(cls._register.keys())
+            ]
         )
+
+
+class ListKnob(Knob):
+    """
+    A specialised Knob that expects its value to be a json list environment variable like:
+    ENV_LIST_EXAMPLE='["Foo", "bar"]'
+    """
+
+    def __init__(
+        self,
+        env_name: str,
+        default,
+        unit: str = '',
+        description: str = '',
+        validator=None,
+    ):
+        """
+        :param env_name: Name of environment variable
+        :param default: Default knob setting
+        :param unit: Unit description
+        :param description: What does this knob do
+        :param validator: Callable to validate value
+        """
+
+        # the default's type sets the python type of the value
+        # retrieved from the environment
+        self._cast = type([])
+
+        super().__init__(env_name, default, unit, description, validator)
+
+    def get(self):
+        """
+        convert json env variable if set to list
+        """
+        source_value = os.getenv(self.env_name)
+        # set the environment if it is not set
+        if source_value is None:
+            os.environ[self.env_name] = str(self.default)
+            return self.default
+
+        try:
+            val = json.loads(source_value)
+        except ValueError as e:
+            click.secho(e.message, err=True, color='red')
+            sys.exit(1)
+
+        if self.validator:
+            val = self.validator(val)
+
+        return val

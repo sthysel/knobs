@@ -1,9 +1,6 @@
-# -*- coding: utf-8 -*-
-# forked adapted and merged from
+# forked, adapted and merged from
 # https://github.com/theskumar/python-dotenv
 # https://github.com/mattseymour/python-env
-
-from __future__ import absolute_import
 
 import codecs
 import os
@@ -31,7 +28,7 @@ def load_dotenv(dotenv_path, verbose=False):
     """
     if not os.path.exists(dotenv_path):
         if verbose:
-            warnings.warn("Not loading {}, it doesn't exist.".format(dotenv_path))
+            warnings.warn(f"Not loading {dotenv_path}, it doesn't exist.")
         return None
     for k, v in dotenv_values(dotenv_path).items():
         os.environ.setdefault(k, v)
@@ -51,16 +48,14 @@ def get_key(dotenv_path, key_to_get, verbose=False):
     key_to_get = str(key_to_get)
     if not os.path.exists(dotenv_path):
         if verbose:
-            warnings.warn("Can't read {}, it doesn't exist.".format(dotenv_path))
+            warnings.warn(f"Can't read {dotenv_path}, it doesn't exist.")
         return None
     dotenv_as_dict = dotenv_values(dotenv_path)
     if key_to_get in dotenv_as_dict:
         return dotenv_as_dict[key_to_get]
     else:
         if verbose:
-            warnings.warn("key {key} not found in {path}.".format(
-                key=key_to_get, path=dotenv_path)
-            )
+            warnings.warn(f"key {key_to_get} not found in {dotenv_path}.")
         return None
 
 
@@ -69,7 +64,7 @@ def set_key(dotenv_path, key_to_set, value_to_set, quote_mode='always', verbose=
     Adds or Updates a key/value to the given .env
 
     If the .env path given doesn't exist, fails instead of risking creating
-    an orphan .env somewhere in the filesystem
+    an orphan .env somewhere in the file-system
 
     :param dotenv_path: env path
     :param key_to_set: key
@@ -82,7 +77,7 @@ def set_key(dotenv_path, key_to_set, value_to_set, quote_mode='always', verbose=
     value_to_set = str(value_to_set).strip("'").strip('"')
     if not os.path.exists(dotenv_path):
         if verbose:
-            warnings.warn("Can't write to {}, it doesn't exist.".format(dotenv_path))
+            warnings.warn(f"Can't write to {dotenv_path}, it doesn't exist.")
         return None, key_to_set, value_to_set
 
     dotenv_as_dict = OrderedDict(parse_dotenv(dotenv_path))
@@ -108,16 +103,14 @@ def unset_key(dotenv_path, key_to_unset, quote_mode='always', verbose=False):
     key_to_unset = str(key_to_unset)
     if not os.path.exists(dotenv_path):
         if verbose:
-            warnings.warn("Can't delete from {}, it doesn't exist.".format(dotenv_path))
+            warnings.warn(f"Can't delete from {dotenv_path}, it doesn't exist.")
         return None, key_to_unset
     dotenv_as_dict = dotenv_values(dotenv_path)
     if key_to_unset in dotenv_as_dict:
         dotenv_as_dict.pop(key_to_unset, None)
     else:
         if verbose:
-            warnings.warn("Key {key} not removed from {path}, key doesn't exist.".format(
-                key=key_to_unset, path=dotenv_path)
-            )
+            warnings.warn(f"Key {key_to_unset} not removed from {dotenv_path}, key doesn't exist.")
         return None, key_to_unset
 
     success = flatten_and_write(dotenv_path, dotenv_as_dict, quote_mode)
@@ -190,20 +183,17 @@ def _get_format(value, quote_mode='always'):
     Returns the quote format depending on the quote_mode.
     This determines if the key value will be quoted when written to
     the env file.
-    
-    :param value: 
-    :param quote_mode: 
+
+    :param value:
+    :param quote_mode:
     :return: str
     :raises: KeyError if the quote_mode is unknown
     """
 
-    formats = {
-        'always': '{key}="{value}"\n',
-        'auto': '{key}={value}\n'
-    }
+    formats = {'always': '{key}="{value}"\n', 'auto': '{key}={value}\n'}
 
     if quote_mode not in formats.keys():
-        return KeyError('quote_mode {} is invalid'.format(quote_mode))
+        return KeyError(f'quote_mode {quote_mode} is invalid')
 
     _mode = quote_mode
     if quote_mode == 'auto' and ' ' in value:
