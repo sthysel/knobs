@@ -2,6 +2,8 @@ import os
 import sys
 import json
 
+from json import JSONDecodeError
+
 import click
 import tabulate
 
@@ -197,40 +199,24 @@ class ListKnob(Knob):
     ENV_LIST_EXAMPLE='["Foo", "bar"]'
     """
 
-    def __init__(
-        self,
-        env_name: str,
-        default,
-        unit: str = '',
-        description: str = '',
-        validator=None,
-    ):
-        """
-        :param env_name: Name of environment variable
-        :param default: Default knob setting
-        :param unit: Unit description
-        :param description: What does this knob do
-        :param validator: Callable to validate value
-        """
-
-        # the default's type sets the python type of the value
-        # retrieved from the environment
-        self._cast = type([])
-
-        super().__init__(env_name, default, unit, description, validator)
-
     def get(self):
         """
         convert json env variable if set to list
         """
+
+        self._cast = type([])
         source_value = os.getenv(self.env_name)
+
         # set the environment if it is not set
         if source_value is None:
-            os.environ[self.env_name] = str(self.default)
+            os.environ[self.env_name] = json.dumps(self.default)
             return self.default
 
         try:
             val = json.loads(source_value)
+        except JSONDecodeError as e:
+            click.secho(str(e), err=True, color='red')
+            sys.exit(1)
         except ValueError as e:
             click.secho(e.message, err=True, color='red')
             sys.exit(1)
