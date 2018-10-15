@@ -153,6 +153,13 @@ class Knob:
         ctx.exit()
 
     @classmethod
+    def print_current_knobs_table(cls, ctx, param, value):
+        if not value or ctx.resilient_parsing:
+            return
+        click.echo(cls.get_knobs_current_as_table())
+        ctx.exit()
+
+    @classmethod
     def get_knob_defaults_as_table(cls):
         """
         Renders knobs in table
@@ -164,6 +171,22 @@ class Knob:
                 'Knob': name,
                 'Description': cls.get_registered_knob(name).description,
                 'Default': cls.get_registered_knob(name).default
+            } for name in sorted(cls._register.keys())
+        ]
+        return tabulate.tabulate(knob_list, headers='keys', tablefmt='fancy_grid')
+
+    @classmethod
+    def get_knobs_current_as_table(cls):
+        """
+        Renders current knob values in table
+        :return:
+        """
+
+        knob_list = [
+            {
+                'Knob': name,
+                'Description': cls.get_registered_knob(name).description,
+                'Value': cls.get_registered_knob(name)(),
             } for name in sorted(cls._register.keys())
         ]
         return tabulate.tabulate(knob_list, headers='keys', tablefmt='fancy_grid')

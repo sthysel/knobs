@@ -1,24 +1,18 @@
-# -*- encoding: utf-8 -*-
 import io
 from glob import glob
 from os.path import basename, dirname, join, splitext
 
 from setuptools import find_packages, setup
 
-
-def read(*names, **kwargs):
-    return io.open(
-        join(dirname(__file__), *names),
-        encoding=kwargs.get('encoding', 'utf8')
-    ).read()
-
+with open('README.rst', encoding='utf-8') as f:
+    readme = f.read()
 
 setup(
     name='knobs',
     license='GPLv2',
     version='2.0.0',
     description='Environment variable manager',
-    long_description=read('README.rst'),
+    long_description=readme,
     install_requires=[
         'click',
         'python-dotenv',
