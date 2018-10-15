@@ -27,14 +27,7 @@ lint:
 
 
 sdist: clean
-	$(info # Build the sdist)
 	python setup.py sdist
-	ls -l dist
-
-wheel: clean
-	$(info # Build the wheel)
-	python setup.py bdist_wheel
-	ls -l dist
 
 pep8:
 	autopep8 -aa --in-place --recursive --max-line-length=130 ./src
@@ -60,5 +53,4 @@ git-clean:
 	git clean -f -d
 
 release: clean
-	python setup.py bdist_wheel
 	twine upload ./dist/*
