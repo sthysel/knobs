@@ -16,6 +16,7 @@ setup(
     install_requires=[
         'click',
         'python-dotenv',
+        'tabulate',
     ],
     author='sthysel',
     author_email='sthysel@gmail.com',
