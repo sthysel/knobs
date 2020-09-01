@@ -10,7 +10,7 @@ with open('README.rst', encoding='utf-8') as f:
 setup(
     name='knobs',
     license='GPLv2',
-    version='2.0.2',
+    version='2.1.0',
     description='Environment variable manager',
     long_description=readme,
     install_requires=[
