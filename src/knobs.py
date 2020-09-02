@@ -238,10 +238,10 @@ class ListKnob(Knob):
         try:
             val = json.loads(source_value)
         except JSONDecodeError as e:
-            click.secho(str(e), err=True, color='red')
+            click.secho(f"Environment name '{self.env_name}' failed with '{source_value}', {e}", err=True, color='red')
             sys.exit(1)
         except ValueError as e:
-            click.secho(e.message, err=True, color='red')
+            click.secho(f"Environment name '{self.env_name}' failed with '{source_value}', {e}", err=True, color='red')
             sys.exit(1)
 
         if self.validator:
