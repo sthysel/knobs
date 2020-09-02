@@ -1,7 +1,7 @@
 .PHONY: clean-pyc clean-build test
 
-all: clean sdist wheel
-	
+all: clean sdist
+
 
 clean: clean-build clean-pyc
 
