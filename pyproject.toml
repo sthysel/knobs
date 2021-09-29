@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "knobs"
+version = "3.0.0"
+description = "Knobs are used to tune environment variables"
+authors = ["sthysel <sthysel@gmail.com>"]
+license = "GPLv2"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+click = "^8.0.1"
+tabulate = "^0.8.9"
+
+[tool.poetry.dev-dependencies]
+tox = "^3.24.4"
+pytest = "^6.2.5"
+bumpversion = "^0.6.0"
+pre-commit = "^2.15.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
